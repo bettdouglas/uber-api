@@ -1,0 +1,27 @@
+version: '3'
+services: 
+  server:
+    image: uber-api:latest
+    environment:
+      dbhost: db
+    container_name: uber-api
+    links: 
+      - db
+    depends_on:
+      - db
+    ports: 
+      - "6789:6789"
+
+  db:
+    image: "mdillon/postgis:9.6"
+    container_name: uber-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: alliswell
+      
+    ports: 
+      - "5437:5432"
+    volumes: 
+      - uber-db-data:/var/lib/postgresql/data #persistence
+volumes: 
+  uber-db-data: {}
