@@ -4,7 +4,7 @@ class TimeEstimator {
 
   String host;
 
-  PostgreSQLConnection connection = PostgreSQLConnection('uber-db', 5432, 'zindi',username: 'postgres',password: 'alliswell');
+  PostgreSQLConnection connection = PostgreSQLConnection('localhost', 5432, 'zindi',username: 'postgres',password: 'alliswell');
   bool get isOpen => !connection.isClosed;
 
   init()  async {
@@ -30,7 +30,7 @@ class TimeEstimator {
 
   Future<Map<int,String>> getPlaceNameFromHexClusters(double lat,double lon) async {
     String stmt = """
-      SELECT "id","DISPLAY_NAME" from hexclusters where ST_Intersects(geom,ST_GeomFromText('POINT($lon $lat)',4326))
+      SELECT "id","NAME" from hexclusters where ST_Intersects(geom,ST_GeomFromText('POINT($lon $lat)',4326))
     """;
     var res = await connection.query(stmt);
     return {res[0][0] : res[0][1]};
