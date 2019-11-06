@@ -1,21 +1,23 @@
-import 'package:angel_hot/angel_hot.dart';
+import 'package:angel_framework/http.dart';
 import 'package:hello_angel/src/server.dart';
 // import 'package:hello_angel/src/time-est.dart';
 String hostName;
 
 main(List<String> args) async {
-  print("Db-host should be ${args[0]}");
-  if(args[0]==null){
-    print('Cannot open connection to the database');
-  } else {
-    hostName = args[0];
-  }
-  // var server = createServer(host: args[0]);
-  
-  var hotReload = HotReloader(createServer, [
-    'bin/main.dart'
-  ]);
-  await hotReload.startServer('localhost',3000);
+  // // print("Db-host should be ${args[0]}");
+  // if(args[0]==null){
+  //   print('Cannot open connection to the database');
+  // } else {
+  //   hostName = args[0];
+  // }
+  var server = await createServer();
+  var http = AngelHttp(server);
+
+  await http.startServer('localhost',2000);
+  // var hotReload = HotReloader(createServer, [
+  //   'bin/main.dart'
+  // ]);
+  // await hotReload.startServer('localhost',3000);
   // var timeService = TimeEstimator();
   // await timeService.init();
   // if(timeService.isOpen) {
