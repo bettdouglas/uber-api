@@ -5,13 +5,13 @@ import 'package:hello_angel/src/server.dart';
 String hostName;
 
 main(List<String> args) async {
-  // print("Db-host should be ${args[0]}");
+  print("Db-host should be ${args[0]}");
   // if(args[0]==null){
   //   print('Cannot open connection to the database');
   // } else {
   //   hostName = args[0];
   // }
-  var server = await createServer();
+  var server = await createServer(host: args[0]);
 
   var http = AngelHttp(server);
 

@@ -2,9 +2,13 @@ import 'package:postgres/postgres.dart';
 
 class TimeEstimator {
 
+  TimeEstimator(this.host){
+    connection = PostgreSQLConnection('$host', 5432, 'zindi',username: 'postgres',password: 'alliswell');
+  }
+
   String host;
 
-  PostgreSQLConnection connection = PostgreSQLConnection('uber-db', 5432, 'zindi',username: 'postgres',password: 'alliswell');
+  PostgreSQLConnection connection;
   bool get isOpen => !connection.isClosed;
 
   init()  async {

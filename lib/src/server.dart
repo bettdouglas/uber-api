@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:angel_framework/angel_framework.dart';
 import 'package:hello_angel/src/time-est.dart';
 
-Future<Angel> createServer() async {
+Future<Angel> createServer({String host}) async {
 
-  var uberizer = TimeEstimator();
+  var uberizer = TimeEstimator(host);
   await uberizer.init();
 
   var app = Angel();
