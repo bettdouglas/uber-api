@@ -1,7 +1,7 @@
 version: '3'
 services: 
   server:
-    image: uber-api:latest
+    image: doucker/uber-api:latest
     environment:
       dbhost: db
     container_name: uber-api
@@ -20,7 +20,7 @@ services:
       POSTGRES_PASSWORD: alliswell
       
     ports: 
-      - "5437:5432"
+      - "5438:5432"
     volumes: 
       - uber-db-data:/var/lib/postgresql/data #persistence
 volumes: 
