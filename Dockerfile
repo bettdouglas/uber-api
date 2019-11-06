@@ -9,4 +9,4 @@ RUN pub get --offline
 ENV dbhost localhost
 
 CMD []
-ENTRYPOINT /usr/bin/dart bin/server.dart ${dbhost}
+ENTRYPOINT /usr/bin/dart bin/main.dart ${dbhost}
