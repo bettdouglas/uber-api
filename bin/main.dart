@@ -1,3 +1,4 @@
+import 'package:angel_framework/http.dart';
 import 'package:angel_hot/angel_hot.dart';
 import 'package:hello_angel/src/server.dart';
 // import 'package:hello_angel/src/time-est.dart';
@@ -10,12 +11,16 @@ main(List<String> args) async {
   // } else {
   //   hostName = args[0];
   // }
-  // var server = createServer(host: args[0]);
+  var server = await createServer();
+
+  var http = AngelHttp(server);
+
+  await http.startServer('server',3000);
   
-  var hotReload = HotReloader(createServer, [
-    'bin/main.dart'
-  ]);
-  await hotReload.startServer('server',3000);
+  // var hotReload = HotReloader(createServer, [
+  //   'bin/main.dart'
+  // ]);
+  // await hotReload.startServer('server',3000);
   // var timeService = TimeEstimator();
   // await timeService.init();
   // if(timeService.isOpen) {
