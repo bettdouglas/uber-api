@@ -8,14 +8,6 @@ import 'package:postgres/postgres.dart';
 
 Future<Angel> createServer() async {
 
-  PostgreSQLConnection connection = PostgreSQLConnection('uber-db', 5432, 'gis',username: 'postgres', password: "alliswell");
-  await connection.open();
-  
-  if (!connection.isClosed) {
-    print('Database connection is open');
-  }
-  
-  var dbhelper = DBHelper(connection: connection);
   var uberizer = TimeEstimator();
   await uberizer.init();
 
@@ -27,7 +19,6 @@ Future<Angel> createServer() async {
   //     if(rec.stackTrace != null) print(rec.stackTrace.toString());
   //   });
 
-  app.container.registerSingleton(dbhelper);
 
   app.get('/', (req, res) => res.write('Hello from angel'));
 
@@ -83,34 +74,34 @@ Future<Angel> createServer() async {
     res.redirect('https://twitter.com/bettdougie');
   });
 
-  app.get('place/fromlatlng/:lat/:lng', (req, res) async {
-    var lat = double.tryParse(req.params['lat']);
-    var lng = double.tryParse(req.params['lng']);
+  // app.get('place/fromlatlng/:lat/:lng', (req, res) async {
+  //   var lat = double.tryParse(req.params['lat']);
+  //   var lng = double.tryParse(req.params['lng']);
 
-    if (lat == null || lng == null) {
-      res.write(
-          'Please enter coordinates in proper format as localhost:3000/place/fromlatlng/-3.45/67.7');
-    } else {
-      print("Getting placename for lat > $lat, lng > $lng");
-      var place = await dbhelper.getPlaceName(lat, lng);
-      if (place != null) {
-        print(place);
-        // res.write('${place.name0},${place.name1},${place.name2},');
-        return {
-          "COUNTRY" : place.name0,
-          "LEVEL1" : place.name1,
-          "LEVEL2" : place.name2,
-        };
-      } else {
-        print('Place is null');
-        // res.write('Internal server error');
-        // res.writeln();
-        return {
-          "ERROR" : "Invalid coordinates"
-        };
-      }
-    }
-  });
+  //   if (lat == null || lng == null) {
+  //     res.write(
+  //         'Please enter coordinates in proper format as localhost:3000/place/fromlatlng/-3.45/67.7');
+  //   } else {
+  //     print("Getting placename for lat > $lat, lng > $lng");
+  //     // var place = await dbhelper.getPlaceName(lat, lng);
+  //     if (place != null) {
+  //       print(place);
+  //       // res.write('${place.name0},${place.name1},${place.name2},');
+  //       return {
+  //         "COUNTRY" : place.name0,
+  //         "LEVEL1" : place.name1,
+  //         "LEVEL2" : place.name2,
+  //       };
+  //     } else {
+  //       print('Place is null');
+  //       // res.write('Internal server error');
+  //       // res.writeln();
+  //       return {
+  //         "ERROR" : "Invalid coordinates"
+  //       };
+  //     }
+  //   }
+  // });
 
   app.addRoute('GET', 'greet', (req, res) async {
     await req.parseBody();
